@@ -1,5 +1,6 @@
 package swaglabs.stepdefinitions;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,6 +14,7 @@ import net.serenitybdd.screenplay.questions.Text;
 import net.serenitybdd.screenplay.ui.Button;
 import swaglabs.Model.SwaglabsUser;
 import swaglabs.tasks.authentication.Login;
+import swaglabs.tasks.navigation.Navigate;
 
 
 public class AuthenticationStepDefinitions {
@@ -26,6 +28,14 @@ public class AuthenticationStepDefinitions {
     public void logs_in_with_valid_credentials(Actor actor) {
         actor.attemptsTo(
             Login.asA(SwaglabsUser.STANDARD_USER)
+        );
+    }
+
+    @Given("{actor} has logged on to the application")
+    public void is_Logged_on(Actor actor) {
+        actor.attemptsTo(
+                Navigate.toTheLoginPage(),
+                Login.asA(SwaglabsUser.STANDARD_USER)
         );
     }
 
@@ -52,4 +62,5 @@ public class AuthenticationStepDefinitions {
                 Ensure.that(Text.of("(//h3[contains(text(),'Epic sadface: Username and password do not match a')])[1]")).isEqualTo("Epic sadface: Username and password do not match any user in this service")
         );
     }
+
 }
